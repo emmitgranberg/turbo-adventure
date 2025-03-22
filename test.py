@@ -24,7 +24,8 @@ class PresentationFeedback:
         self.total_frames = 0
         self.filler_words = {
             "um": 0, "uh": 0, "er": 0, "ah": 0, "like": 0, 
-            "you know": 0, "so": 0, "basically": 0, "actually": 0
+            "you know": 0, "so": 0, "basically": 0, "actually": 0, 
+            "ok": 0, "kind of": 0, "sort of": 0, "I mean": 0
         }
         self.transcript = ""
         self.presentation_context = None
