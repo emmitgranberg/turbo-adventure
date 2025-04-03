@@ -501,7 +501,7 @@ class PresentationFeedback:
         # Eye contact feedback
         if self.eye_contact_percent < 30:
             feedback.append("Work on maintaining more eye contact with your audience")
-        elif self.eye_contact_percent < 70:
+        elif self.eye_contact_percent < 65:
             feedback.append("Your eye contact is acceptable but could be improved")
         else:
             feedback.append("You maintain excellent eye contact")
