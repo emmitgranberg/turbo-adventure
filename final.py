@@ -51,7 +51,7 @@ class PresentationFeedback:
         self.SILENCE_THRESHOLD = 4.0  # seconds
         
         # Audio recording parameters
-        self.CHUNK = 8000  # Smaller chunk size for better real-time processing
+        self.CHUNK = 8000  # Smaller chunk size (size of recording data) for better real-time processing
         self.FORMAT = pyaudio.paInt16  # Changed to 16-bit PCM
         self.CHANNELS = 1
         self.RATE = 16000  # Standard rate for speech recognition
@@ -441,18 +441,11 @@ class PresentationFeedback:
         # Generate feedback
         feedback = []
         if note_range < 5:
-            feedback.append("Your vocal range is very limited")
+            feedback.append("Your vocal range is very limited. Try to vary your voice's pitch more to engage the audience!")
         elif note_range < 10:
-            feedback.append("Your vocal range is moderate")
+            feedback.append("Your vocal range is moderate. Try to vary your voice's pitch a little more to engage the audience!")
         else:
-            feedback.append("You have good vocal range")
-            
-        if distribution_score < 15:
-            feedback.append("You tend to favor certain notes")
-        else:
-            feedback.append("You distribute your notes well")
-            
-        return total_score, ", ".join(feedback)
+            feedback.append("You have good vocal range. Nice job!")
 
     def generate_feedback(self):
         """Generate presentation feedback based on analysis"""
@@ -460,7 +453,7 @@ class PresentationFeedback:
         print(f"Duration: {self.duration:.1f} seconds ({self.duration/60:.1f} minutes)")
         
         # Basic statistics
-        print("\n--- Basic Statistics ---")
+        print("\n--- Eye Contact Analysis ---")
         print(f"Eye contact maintained: {self.eye_contact_percent:.1f}% of the time")
         
         # Vocal variety analysis
@@ -478,10 +471,10 @@ class PresentationFeedback:
         
         # Group filler words by category
         category_totals = {
-            "Um-like sounds": sum(self.filler_words[cat] for cat in ["um"]),
-            "Uh-like sounds": sum(self.filler_words[cat] for cat in ["uh"]),
-            "Er-like sounds": sum(self.filler_words[cat] for cat in ["er"]),
-            "Other filler phrases": sum(self.filler_words[cat] for cat in 
+            "Um-like sounds": sum(self.filler_words[words] for words in ["um"]),
+            "Uh-like sounds": sum(self.filler_words[words] for words in ["uh"]),
+            "Er-like sounds": sum(self.filler_words[words] for words in ["er"]),
+            "Other filler phrases": sum(self.filler_words[words] for words in 
                 ["like", "you_know", "basically", "actually", "sort_of", "kind_of", "i_mean", "right", "well"])
         }
         
@@ -499,11 +492,11 @@ class PresentationFeedback:
         
         # Eye contact feedback
         if self.eye_contact_percent < 30:
-            feedback.append("Work on maintaining more eye contact with your audience")
+            feedback.append("Work on maintaining more eye contact. Solid eye contact can help you connect with your audience!")
         elif self.eye_contact_percent < 65:
-            feedback.append("Your eye contact is acceptable but could be improved")
+            feedback.append("Your eye contact could be improved a little. Solid eye contact can help you connect with your audience!")
         else:
-            feedback.append("You maintain excellent eye contact")
+            feedback.append("You maintain excellent eye contact. Good work!")
         
         # Filler words feedback
         if self.filler_rate > 10:
@@ -511,22 +504,22 @@ class PresentationFeedback:
         elif self.filler_rate > 5:
             feedback.append("Work on reducing some of your filler words")
         else:
-            feedback.append("You use minimal filler words, which is excellent")
+            feedback.append("You use minimal filler words, which is excellent!")
             
         # Awkward pauses feedback
         if self.awkward_pauses > 3:
-            feedback.append("You had several awkward pauses (>4s). Try to maintain a more consistent speaking pace")
+            feedback.append("You had several awkward pauses (>4s). Try to maintain a more consistent speaking pace for better flow.")
         elif self.awkward_pauses > 0:
-            feedback.append("You had a few awkward pauses.")
+            feedback.append("You had a few awkward pauses. Try to reduce this and let your words flow more.")
         else:
-            feedback.append("You maintained a good speaking pace with no awkward pauses")
+            feedback.append("You maintained a good speaking pace with no awkward pauses. Awesome!")
         
         # Print feedback
         for item in feedback:
             print(f"• {item}")
 
         print("\nPresentation analysis complete!")
-        print("Keep practicing and refer to the feedback to improve your presentation skills.")
+        print("Keep practicing and refer to the feedback to improve your presentation skills. Thank you for using Presently!")
 
 if __name__ == "__main__":
     feedback = PresentationFeedback()
