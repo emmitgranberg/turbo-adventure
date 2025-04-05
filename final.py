@@ -8,7 +8,6 @@ from collections import Counter
 import pyaudio
 import wave
 import struct
-import librosa
 from scipy.signal import find_peaks
 import os
 import json
