@@ -224,20 +224,26 @@ class EyeContactDetector:
                 self.draw_gaze_arrow(image, start_point, gaze_direction)
 
                 # Add text overlay for gaze directions and head pose
-                cv2.putText(image, f'Gaze X: {gaze_direction[0]:.2f}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'Gaze Y: {gaze_direction[1]:.2f}', (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'Face X: {x:.2f}', (20, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'Face Y: {y:.2f}', (20, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'blink ?: {self.blinking}', (20, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'head: {head_text}', (20, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
-                cv2.putText(image, f'gaze: {gaze_text}', (20, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'Gaze X: {gaze_direction[0]:.2f}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'Gaze Y: {gaze_direction[1]:.2f}', (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'Face X: {x:.2f}', (20, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'Face Y: {y:.2f}', (20, 200), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'blink ?: {self.blinking}', (20, 250), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'head: {head_text}', (20, 300), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
+                ## cv2.putText(image, f'gaze: {gaze_text}', (20, 350), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2)
 
         end = time.time()
         totalTime = end - start
         fps = 1 / (totalTime + 0.00001)  # Compute FPS with zero division sec
 
-        cv2.putText(image, f'FPS: {int(fps)}', (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2)
+        # cv2.putText(image, f'FPS: {int(fps)}', (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2)
 
+        target_fps = 30
+        target_time = 1.0 / target_fps
+        if totalTime < target_time:
+            time.sleep(target_time - totalTime)
+
+        # Add text overlay for eye contact status
         return image, self.eye_contact
 
     def calibrate(self):
